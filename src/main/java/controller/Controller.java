@@ -14,7 +14,7 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DAO dao = new DAO();
 	JavaBeans contato = new JavaBeans();
-	
+
 	public Controller() {
 		super();
 	}
@@ -32,6 +32,7 @@ public class Controller extends HttpServlet {
 			novoContato(request, response);
 		}
 	}
+
 	// Método para listar os contatos
 	protected void contatos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -42,13 +43,14 @@ public class Controller extends HttpServlet {
 	protected void novoContato(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// Teste de recebimento
-		System.out.println(request.getParameter("nome"));
-		System.out.println(request.getParameter("fone"));
-		System.out.println(request.getParameter("email"));
-		
+
 		contato.setNome(request.getParameter("nome"));
 		contato.setFone(request.getParameter("fone"));
 		contato.setEmail(request.getParameter("email"));
 
+		// invocar o metodo inserirContato passando pelo objeto contato
+		dao.inserirContato(contato);
+		// redirecionar para o documento agenda.jsp
+		response.sendRedirect("main");
 	}
 }
