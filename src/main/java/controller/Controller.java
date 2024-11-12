@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.DAO;
 import model.JavaBeans;
 
-@WebServlet(urlPatterns = { "/Controller", "/main", "/insert", "/select" })
+@WebServlet(urlPatterns = { "/Controller", "/main", "/insert", "/select", "/update" })
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DAO dao = new DAO();
@@ -36,6 +36,8 @@ public class Controller extends HttpServlet {
 			novoContato(request, response);
 		} else if (action.equals("/select")) {
 			listarContato(request, response);
+		} else if (action.equals("/update")) {
+			editarContato(request, response);
 		} else {
 			response.sendRedirect("index.html");
 		}
@@ -86,7 +88,19 @@ public class Controller extends HttpServlet {
 		// encaminhar ao documento editar.jsp
 		RequestDispatcher rd = request.getRequestDispatcher("editar.jsp");
 		rd.forward(request, response);
+	}
 
+	protected void editarContato(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		contato.setIdcon(request.getParameter("idcon"));
+		contato.setNome(request.getParameter("nome"));
+		contato.setFone(request.getParameter("fone"));
+		contato.setEmail(request.getParameter("email"));
+		// executar o metodo alterarcontato
+		dao.alterarContato(contato);
+		//redirecionar para o documento agenda
+		response.sendRedirect("main");
 	}
 
 }
