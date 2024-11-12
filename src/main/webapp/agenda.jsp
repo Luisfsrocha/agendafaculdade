@@ -38,18 +38,21 @@ ArrayList<JavaBeans> lista = (ArrayList<JavaBeans>) request.getAttribute("contat
 				<td><%=lista.get(i).getNome()%></td>
 				<td><%=lista.get(i).getFone()%></td>
 				<td><%=lista.get(i).getEmail()%></td>
-				<td><a href="select?idcon=<%=lista.get(i).getIdcon()%>"
-					class="Botao1">Editar</a></td>
+				<td><a href="select?idcon=<%=lista.get(i).getIdcon()%>"class="Botao1">Editar</a> 
+				<a href="javascript: confirmar(<%=lista.get(i).getIdcon()%>)" class="Botao2">Excluir</a></td>
 			</tr>
 			<%
 			}
 			%>
 		</tbody>
 	</table>
+	
 	<%
 	} else {
 	out.println("<p>A lista de contatos está vazia ou não foi carregada.</p>");
 	}
 	%>
+	
+	<script src = "scripts/confirmador.js"></script>
 </body>
 </html>

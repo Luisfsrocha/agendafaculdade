@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.DAO;
 import model.JavaBeans;
 
-@WebServlet(urlPatterns = { "/Controller", "/main", "/insert", "/select", "/update" })
+@WebServlet(urlPatterns = { "/Controller", "/main", "/insert", "/select", "/update", "/delete" })
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DAO dao = new DAO();
@@ -38,6 +38,8 @@ public class Controller extends HttpServlet {
 			listarContato(request, response);
 		} else if (action.equals("/update")) {
 			editarContato(request, response);
+		} else if (action.equals("/delete")) {
+			removerContato(request, response);
 		} else {
 			response.sendRedirect("index.html");
 		}
@@ -92,14 +94,27 @@ public class Controller extends HttpServlet {
 
 	protected void editarContato(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		contato.setIdcon(request.getParameter("idcon"));
 		contato.setNome(request.getParameter("nome"));
 		contato.setFone(request.getParameter("fone"));
 		contato.setEmail(request.getParameter("email"));
 		// executar o metodo alterarcontato
 		dao.alterarContato(contato);
-		//redirecionar para o documento agenda
+		// redirecionar para o documento agenda
+		response.sendRedirect("main");
+	}
+
+	// remover um contato
+	protected void removerContato(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// recebimento do id
+		String idcon = request.getParameter("idcon");
+		// setar
+		contato.setIdcon(idcon);
+		// executar o metodo deletar
+		dao.deletarContato(contato);
+		// redirecionar para o documento agenda
 		response.sendRedirect("main");
 	}
 
